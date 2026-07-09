@@ -1,0 +1,42 @@
+name: Build Windows EXE
+
+# Builds LiteDicom.exe on a Windows runner and:
+#   - uploads it as a downloadable artifact on every run
+#   - attaches it to the GitHub Release when you push a tag like v1.0.0
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:      # lets you run it manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pyinstaller pydicom numpy pillow
+
+      - name: Build executable
+        run: python -m PyInstaller --noconfirm --clean --onefile --windowed --name LiteDicom --collect-all pydicom LiteDicom.py
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: LiteDicom-windows
+          path: dist/LiteDicom.exe
+
+      - name: Attach to release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/LiteDicom.exe
