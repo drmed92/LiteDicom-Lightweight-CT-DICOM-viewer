@@ -7,7 +7,7 @@ views, material auto-colouring, measuring and annotation tools.
 
 ![Main window](scrshot1.PNG)
 ![Main window](scrshot2.PNG)
-![Main window](sagittal.png)
+![Main window](sagittal.PNG)
 ![Main window](coronal.PNG)
 
 ---
