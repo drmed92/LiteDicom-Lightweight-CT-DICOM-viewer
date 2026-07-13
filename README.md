@@ -5,8 +5,8 @@ No heavyweight frameworks — just Python + Tkinter, with HU windowing, orthogon
 views, material auto-colouring, measuring and annotation tools.
 
 
-![Main window](scrshot1.png)
-![Main window](scrshot2.png)
+![Main window](scrshot1.PNG)
+![Main window](scrshot2.PNG)
 
 ---
 
