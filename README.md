@@ -89,7 +89,7 @@ pip install pyinstaller pydicom numpy pillow
 pyinstaller --onefile --windowed --name LiteDicom --collect-all pydicom LiteDicom.py
 ```
 
-**B. Let GitHub build it.** Copy `build-windows-exe.yml` into `.github/workflows/` in your repo. Then pushing a version tag (e.g. `git tag v1.0.0 && git push --tags`) builds the exe on a Windows runner and **attaches it to that GitHub Release** automatically; you can also trigger it manually from the Actions tab, which uploads the exe as a downloadable artifact. This means you can ship a `.exe` without owning a Windows machine.
+**B. Let GitHub build it.** The workflow is already installed in `.github/workflows/build-windows-exe.yml`. Pushing a version tag (e.g. `git tag v1.0.0 && git push --tags`) builds the exe on a Windows runner and **attaches it to that GitHub Release** automatically; you can also trigger it manually from the Actions tab, which uploads the exe as a downloadable artifact. This means you can ship a `.exe` without owning a Windows machine.
 
 > To also support compressed DICOM in the exe, add `pylibjpeg pylibjpeg-libjpeg pylibjpeg-openjpeg` to the pip install and `--collect-all pylibjpeg` to the PyInstaller command.
 
@@ -110,6 +110,15 @@ pyinstaller --onefile --windowed --name LiteDicom --collect-all pydicom LiteDico
 - Orientation letters follow the usual radiological convention but are **not** derived per-dataset from the direction cosines, so unusual acquisitions may need the Flip H/V toggles.
 - Transparency uses Tk's `gray50` stipple (Tk has no true alpha), which reads as ~50% but is not a real composite.
 - The HU → material table is intended for **visualisation and quick estimation**, not dosimetry-grade segmentation.
+
+## Development
+
+```bash
+pip install numpy pillow pydicom pytest
+python -m pytest
+```
+
+The tests cover the GUI-free core (DICOM loading, HU conversion, slice ordering and spacing, HU → material classification) using synthetic DICOM series generated on the fly, so they need no sample data and no display. GitHub Actions runs them on every push and pull request.
 
 ## Credits
 
