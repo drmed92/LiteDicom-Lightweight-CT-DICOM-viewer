@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+# PyInstaller output (see build_exe.bat / the Windows build workflow)
+build/
+dist/
+*.spec
